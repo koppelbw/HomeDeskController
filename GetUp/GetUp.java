@@ -18,7 +18,9 @@ import java.util.List;
 public class GetUp {
     public static void main(String[] args) {
         
-        System.out.println("<--GetUp--> Initializing ...");
+	final double version = 1.0;
+	
+        System.out.println("<--GetUp--> Initializing version " + version);
 
 	final int sessionTime = 60;
 	
@@ -31,7 +33,9 @@ public class GetUp {
 		// provision gpio pin #22 as an input pin with its internal pull down resistor enabled
         final GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_22, PinPullResistance.PULL_UP);
         
-        final GpioPinDigitalInput button_WhiteLight = gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, PinPullResistance.PULL_UP);
+        final GpioPinDigitalInput button_WhiteLight = gpio.provisionDigitalInputPin(RaspiPin.GPIO_29, PinPullResistance.PULL_UP);
+	
+	final GpioPinDigitalInput button_RedLight = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, PinPullResistance.PULL_UP);
 
         // set shutdown state for this pin
         //pin.setShutdownOptions(true, PinState.LOW);
@@ -63,13 +67,47 @@ public class GetUp {
         button_WhiteLight.addListener(new GpioPinListenerDigital() {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                // toggle LED off if light is on
+                System.out.println("Turn the lights to WHITE");
+		
                 if(event.getState().toString().equals("LOW"))
                 {
 					Process p;
 					try {
 						List<String> cmdList = new ArrayList<String>();
 						cmdList.add("/home/pi/Documents/Projects/DesktopController/googleassistant/lights_white.sh");
+						
+						ProcessBuilder pb = new ProcessBuilder(cmdList);
+						p = pb.start();            
+						p.waitFor(); 
+						
+						BufferedReader reader=new BufferedReader(new InputStreamReader(
+						 p.getInputStream())); 
+						 
+						String line; 
+						while((line = reader.readLine()) != null) { 
+							System.out.println(line);
+						} 
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}                
+                //System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());                
+            }
+        });
+	
+	button_RedLight.addListener(new GpioPinListenerDigital() {
+            @Override
+            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+                System.out.println("Turn the lights to RED");
+				
+                if(event.getState().toString().equals("LOW"))
+                {
+					Process p;
+					try {
+						List<String> cmdList = new ArrayList<String>();
+						cmdList.add("/home/pi/Documents/Projects/DesktopController/googleassistant/lights_red.sh");
 						
 						ProcessBuilder pb = new ProcessBuilder(cmdList);
 						p = pb.start();            

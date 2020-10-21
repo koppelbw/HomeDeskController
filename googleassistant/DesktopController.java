@@ -8,26 +8,26 @@ class DesktopController
 { 
     public static void main(String[] args) 
     { 
-        Process p;
-        try {
-            List<String> cmdList = new ArrayList<String>();
-            cmdList.add("/home/pi/Documents/Projects/DesktopController/googleassistant/lights_white.sh");
+        //Process p;
+        //try {
+            //List<String> cmdList = new ArrayList<String>();
+            //cmdList.add("/home/pi/Documents/Projects/DesktopController/googleassistant/lights_white.sh");
             
-            ProcessBuilder pb = new ProcessBuilder(cmdList);
-            p = pb.start();            
-            p.waitFor(); 
+            //ProcessBuilder pb = new ProcessBuilder(cmdList);
+            //p = pb.start();            
+            //p.waitFor(); 
             
-            BufferedReader reader=new BufferedReader(new InputStreamReader(
-             p.getInputStream())); 
+            //BufferedReader reader=new BufferedReader(new InputStreamReader(
+             //p.getInputStream())); 
              
-            String line; 
-            while((line = reader.readLine()) != null) { 
-                System.out.println(line);
-            } 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            //String line; 
+            //while((line = reader.readLine()) != null) { 
+                //System.out.println(line);
+            //} 
+        //} catch (IOException e) {
+            //e.printStackTrace();
+        //} catch (InterruptedException e) {
+            //e.printStackTrace();
+        //}
     } 
 } 

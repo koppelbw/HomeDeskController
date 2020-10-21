@@ -1,0 +1,10 @@
+1.) Compile java
+	javac -classpath .:classes:/opt/pi4j/lib/'*' "%f"
+
+2.) Compile jar
+	jar cfm getUp.jar manifest.txt GetUp.class GetUp\$2.class GetUp\$1.class 
+
+3.) Test jar
+	java -jar getUp.jar
+
+4.) bootlauncher.sh is setup to run on pi boot
