@@ -14,11 +14,12 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.String;
 
 public class GetUp {
     public static void main(String[] args) {
         
-	final double version = 1.0;
+	final String version = "1.0.1";
 	
         System.out.println("<--GetUp--> Initializing version " + version);
 
@@ -57,8 +58,8 @@ public class GetUp {
                 // toggle LED off if light is on
                 if(event.getState().toString().equals("LOW"))
                 {
-					led.toggle();
-				}
+			led.toggle();
+		}
                 
                 //System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());                
             }
@@ -66,33 +67,35 @@ public class GetUp {
         
         button_WhiteLight.addListener(new GpioPinListenerDigital() {
             @Override
-            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                System.out.println("Turn the lights to WHITE");
-		
-                if(event.getState().toString().equals("LOW"))
+            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {               
+		if(event.getState().toString().equals("LOW"))
                 {
-					Process p;
-					try {
-						List<String> cmdList = new ArrayList<String>();
-						cmdList.add("/home/pi/Documents/Projects/DesktopController/googleassistant/lights_white.sh");
-						
-						ProcessBuilder pb = new ProcessBuilder(cmdList);
-						p = pb.start();            
-						p.waitFor(); 
-						
-						BufferedReader reader=new BufferedReader(new InputStreamReader(
-						 p.getInputStream())); 
-						 
-						String line; 
-						while((line = reader.readLine()) != null) { 
-							System.out.println(line);
-						} 
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}                
+			System.out.println("Turn the lights to WHITE");
+			
+			Process p;
+			try {
+				List<String> cmdList = new ArrayList<String>();
+				cmdList.add("/home/pi/Documents/Projects/DesktopController/googleassistant/lights_white.sh");
+				
+				ProcessBuilder pb = new ProcessBuilder(cmdList);
+				p = pb.start();            
+				p.waitFor(); 
+				
+				BufferedReader reader=new BufferedReader(new InputStreamReader(
+				 p.getInputStream())); 
+				 
+				String line; 
+				while((line = reader.readLine()) != null) { 
+					System.out.println(line);
+				} 
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}			
+			
+			System.out.println("Lights turned white!");
+		}                
                 //System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());                
             }
         });
@@ -100,32 +103,34 @@ public class GetUp {
 	button_RedLight.addListener(new GpioPinListenerDigital() {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                System.out.println("Turn the lights to RED");
-				
-                if(event.getState().toString().equals("LOW"))
+		if(event.getState().toString().equals("LOW"))
                 {
-					Process p;
-					try {
-						List<String> cmdList = new ArrayList<String>();
-						cmdList.add("/home/pi/Documents/Projects/DesktopController/googleassistant/lights_red.sh");
-						
-						ProcessBuilder pb = new ProcessBuilder(cmdList);
-						p = pb.start();            
-						p.waitFor(); 
-						
-						BufferedReader reader=new BufferedReader(new InputStreamReader(
-						 p.getInputStream())); 
-						 
-						String line; 
-						while((line = reader.readLine()) != null) { 
-							System.out.println(line);
-						} 
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}                
+			System.out.println("Turn the lights to RED");
+			
+			Process p;
+			try {
+				List<String> cmdList = new ArrayList<String>();
+				cmdList.add("/home/pi/Documents/Projects/DesktopController/googleassistant/lights_red.sh");
+				
+				ProcessBuilder pb = new ProcessBuilder(cmdList);
+				p = pb.start();            
+				p.waitFor(); 
+				
+				BufferedReader reader=new BufferedReader(new InputStreamReader(
+				 p.getInputStream())); 
+				 
+				String line; 
+				while((line = reader.readLine()) != null) { 
+					System.out.println(line);
+				} 
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println("Lights turned red!");
+		}                
                 //System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());                
             }
         });		
